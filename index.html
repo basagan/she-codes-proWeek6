@@ -30,18 +30,21 @@
           <div class="col-6 search">
             <form class="row search" id="search-panel">
               <div class="col-auto">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="enter city..."
-                autocomplete="off"
-                id = "search-city"
-              /></div>
-              <div class="col-auto"><button type="submit" class="btn btn-dark"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-          </form>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="enter city..."
+                  autocomplete="off"
+                  id="search-city"
+                />
+              </div>
+              <div class="col-auto">
+                <button type="submit" class="btn btn-dark">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </div>
+            </form>
           </div>
-          
         </div>
       </header>
       <main>
@@ -57,17 +60,24 @@
             <div class="col-6 temperature">
               <div class="row temperature-main">
                 <div class="col-4 temp" id="bigTemp"></div>
-                <div class="col-3 degrees"> <a href="#" id="celsius">°C</a> <a href="#" id="fahrenheit">°F</a> </div>
-                <div class="col-5 emoji-main"> <i class="fa-solid fa-cloud-showers-heavy"></i></div>
+                <div class="col-3 degrees">
+                  <a href="#" id="celsius">°C</a>
+                  <a href="#" id="fahrenheit">°F</a>
+                </div>
+                <div class="col-5 emoji-main">
+                  <i class="fa-solid fa-cloud-showers-heavy"></i>
+                </div>
               </div>
               <div class="row max-min">
                 <div class="col-2 max">
                   max<br />
-                  <p class="temp" id="max"></p><span id="celsius-fahrenheit">°C</span>
+                  <p class="temp" id="max"></p>
+                  <span id="celsius-fahrenheit">°C</span>
                 </div>
                 <div class="col-2 min">
                   min<br />
-                  <p class="temp" id="min"></p><span id="celsius-fahrenheit">°C</span>
+                  <p class="temp" id="min"></p>
+                  <span id="celsius-fahrenheit">°C</span>
                 </div>
                 <div class="col-8" id="descriptonId"></div>
               </div>
@@ -78,37 +88,44 @@
           <div class="col">
             <p class="weekday">Tue</p>
             <p class="emoji"><i class="fa-solid fa-cloud-sun-rain"></i></p>
-            <p class="temp">25</p><span id="celsius-fahrenheit">°C</span>
+            <p class="temp">25</p>
+            <span id="celsius-fahrenheit">°C</span>
           </div>
           <div class="col">
             <p class="weekday">Wed</p>
             <p class="emoji"><i class="fa-solid fa-sun"></i></p>
-            <p class="temp">28</p><span id="celsius-fahrenheit">°C</span>
+            <p class="temp">28</p>
+            <span id="celsius-fahrenheit">°C</span>
           </div>
           <div class="col">
             <p class="weekday">Thu</p>
             <p class="emoji"><i class="fa-solid fa-cloud-showers-heavy"></i></p>
-            <p class="temp">26</p><span id="celsius-fahrenheit">°C</span>
+            <p class="temp">26</p>
+            <span id="celsius-fahrenheit">°C</span>
           </div>
           <div class="col">
             <p class="weekday">Fri</p>
             <p class="emoji"><i class="fa-solid fa-sun"></i></p>
-            <p class="temp">32</p><span id="celsius-fahrenheit">°C</span>
+            <p class="temp">32</p>
+            <span id="celsius-fahrenheit">°C</span>
           </div>
           <div class="col">
             <p class="weekday">Sat</p>
             <p class="emoji"><i class="fa-solid fa-cloud-sun-rain"></i></p>
-            <p class="temp">35</p><span id="celsius-fahrenheit">°C</span>
+            <p class="temp">35</p>
+            <span id="celsius-fahrenheit">°C</span>
           </div>
           <div class="col">
             <p class="weekday">Sun</p>
             <p class="emoji"><i class="fa-solid fa-cloud-showers-heavy"></i></p>
-            <p class="temp">30</p><span id="celsius-fahrenheit">°C</span>
+            <p class="temp">30</p>
+            <span id="celsius-fahrenheit">°C</span>
           </div>
           <div class="col">
             <p class="weekday">Mon</p>
             <p class="emoji"><i class="fa-solid fa-sun"></i></p>
-            <p class="temp">28</p><span id="celsius-fahrenheit">°C</span>
+            <p class="temp">28</p>
+            <span id="celsius-fahrenheit">°C</span>
           </div>
         </div>
         <div id="additionalinfo">
@@ -127,7 +144,7 @@
             </div>
             <div class="col-3">
               <p class="addinfo">humidity</p>
-              <p class="addinfo-numbers"> <span id="humidity"></span>%</p>
+              <p class="addinfo-numbers"><span id="humidity"></span>%</p>
             </div>
           </div>
         </div>
@@ -136,10 +153,21 @@
         </div>
       </main>
       <footer>
-        <p class="coder">Coded with 🖤 &#8192by Basagan</p>
+        <p class="coder">
+          <a
+            href="https://github.com/basagan/vanilla-weather-app"
+            target="_blank"
+          >
+            Open-sourse code</a
+          >
+          by Tatiana Ochirova
+        </p>
       </footer>
     </div>
   </body>
   <script src="src/weather.js"></script>
-  <script src="https://kit.fontawesome.com/60cb1b5e2c.js" crossorigin="anonymous"></script>
+  <script
+    src="https://kit.fontawesome.com/60cb1b5e2c.js"
+    crossorigin="anonymous"
+  ></script>
 </html>
