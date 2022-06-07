@@ -116,3 +116,6 @@ footer {
   border: 1px solid white;
   background-color: white;
 }
+#descriptonId {
+  text-transform: capitalize;
+}

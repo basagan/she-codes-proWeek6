@@ -1,6 +1,6 @@
-//Display current time
-function showDate(today) {
-  today = new Date();
+/*calculate the date*/
+function formateDate(datestamp) {
+  let date = new Date(datestamp);
   let daysWeek = [
     "Sunday",
     "Monday",
@@ -24,37 +24,16 @@ function showDate(today) {
     "Nov",
     "Dec",
   ];
-  let dayWeek = daysWeek[today.getDay()];
-  let date = today.getDate();
-  let month = months[today.getMonth()];
-  let hour = today.getHours();
-  let minutes = today.getMinutes();
-
-  let li = document.querySelector("li.day");
-  li.innerHTML = `${dayWeek}, ${date}  ${month}`;
-
-  let time = document.querySelector("li.time");
-  time.innerHTML = `${hour} : ${minutes}`;
+  let dayWeek = daysWeek[date.getDay()];
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  let month = months[date.getMonth()];
+  let numberDate = date.getDate();
+  return `${dayWeek} ${hours}:${minutes}, ${month} ${numberDate}`;
 }
-
-let formForDate = document.querySelector("#search-panel");
-formForDate.addEventListener("submit", showDate);
-
-/*Search engine when searching for a city (i.e. Milan), 
-display the city name on the page after the user submits the form*/
-
-/*function searchCity(event) {
-  event.preventDefault();
-  let input = document.querySelector("#search-city");
-  let nameCity = document.querySelector("li.name");
-  nameCity.innerHTML = input.value.toUpperCase();
-}
-let formForCity = document.querySelector("#search-panel");
-formForCity.addEventListener("submit", searchCity);*/
-
-/* Display a temperature in Celsius and add a link to convert it to Fahrenheit. 
-When clicking on it, it should convert the temperature to Fahrenheit. 
-When clicking on Celsius, it should convert it back to Celsius.*/
 
 function showFahrenheit(event) {
   event.preventDefault();
@@ -120,6 +99,9 @@ function showTemp(response) {
   document.querySelector(`#windSpeed`).innerHTML = Math.round(
     response.data.wind.speed
   );
+  document.querySelector(`.time`).innerHTML = formateDate(
+    response.data.dt * 1000
+  );
 }
 
 function search(city) {
@@ -132,6 +114,7 @@ function showCityUrl(event) {
   let city = document.querySelector(`#search-city`).value.toLowerCase();
   search(city);
 }
+
 let tempChange = document.querySelector(`#search-panel`);
 tempChange.addEventListener(`submit`, showCityUrl);
 
