@@ -34,31 +34,49 @@ function formateDate(datestamp) {
   let numberDate = date.getDate();
   return `${dayWeek} ${hours}:${minutes}, ${month} ${numberDate}`;
 }
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let day = days[date.getDay()];
+  return day;
+}
 
-function displayForecast() {
+function displayForecast(response) {
+  let forecast = response.data.daily;
   let forecastElement = document.querySelector(`#forecast`);
   let forecastHTML = `<div class = "row">`;
-  let daysForecast = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  daysForecast.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 7) {
+      forecastHTML =
+        forecastHTML +
+        `
         <div class="col-auto">
-          <p class="weekday">${day}</p>
+          <p class="weekday">${formatDay(forecastDay.dt)}</p>
           <p class="emoji">        
             <img
-                  src="http://openweathermap.org/img/wn/50d@2x.png"
+                  src="http://openweathermap.org/img/wn/${
+                    forecastDay.weather[0].icon
+                  }@2x.png"
                   alt=""
                   width="45"
              />       
            </p>   
-           <p class="temp">25</p>   
+           <p class="temp">${Math.round(forecastDay.temp.day)}</p>   
              <span id="celsius-fahrenheit">°C</span> 
          </div>                
   `;
+    }
   });
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
+}
+
+function getForecast(coordinates) {
+  console.log(coordinates);
+  let apiKey = "be2b1d571d2242daa7cb5a3c859e71bb";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude={part}&appid=${apiKey}&units=metric`;
+  console.log(apiUrl);
+  axios.get(apiUrl).then(displayForecast);
 }
 
 function showTemp(response) {
@@ -92,6 +110,8 @@ function showTemp(response) {
   document
     .querySelector(`#icon`)
     .setAttribute(`alt`, response.data.weather[0].description);
+
+  getForecast(response.data.coord);
 }
 
 function showFahrenheit(event) {
@@ -166,5 +186,3 @@ let button = document.querySelector(`#home`);
 button.addEventListener(`click`, showHomeTemp);
 
 search("New York");
-
-displayForecast();
