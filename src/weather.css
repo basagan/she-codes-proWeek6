@@ -118,4 +118,5 @@ footer {
 }
 #descriptonId {
   text-transform: capitalize;
+  padding-left: 60px;
 }

@@ -35,56 +35,11 @@ function formateDate(datestamp) {
   return `${dayWeek} ${hours}:${minutes}, ${month} ${numberDate}`;
 }
 
-function showFahrenheit(event) {
-  event.preventDefault();
-  let fahrenheitTemperature = document.querySelectorAll(".temp");
-  for (i = 0; i < fahrenheitTemperature.length; i++) {
-    fahrenheitTemperature[i].innerHTML = Math.round(
-      (fahrenheitTemperature[i].textContent * 9) / 5 + 32
-    );
-  }
-  let conversationToF = document.querySelectorAll("#celsius-fahrenheit");
-  for (i = 0; i < conversationToF.length; i++) {
-    conversationToF[i].innerHTML = "°F";
-  }
-  let fahrenheitBold = document.querySelector("#fahrenheit");
-  fahrenheitBold.innerHTML = "<strong color='black'>°F</strong>";
-  let celsiusSmall = document.querySelector("#celsius");
-  celsiusSmall.innerHTML = "°C";
-}
-
-let fahrenheit = document.querySelector("#fahrenheit");
-fahrenheit.addEventListener("click", showFahrenheit);
-
-function showCelsius(event) {
-  event.preventDefault();
-  let celsiusTemperature = document.querySelectorAll(".temp");
-  for (i = 0; i < celsiusTemperature.length; i++) {
-    celsiusTemperature[i].innerHTML = Math.round(
-      ((celsiusTemperature[i].textContent - 32) * 5) / 9
-    );
-  }
-  let conversationToC = document.querySelectorAll("#celsius-fahrenheit");
-  for (i = 0; i < conversationToC.length; i++) {
-    conversationToC[i].innerHTML = "°C";
-  }
-  let celsiusBold = document.querySelector("#celsius");
-  celsiusBold.innerHTML = "<strong color='black'>°C</strong>";
-  let fahrenheitSmall = document.querySelector("#fahrenheit");
-  fahrenheitSmall.innerHTML = "°F";
-}
-let celsius = document.querySelector("#celsius");
-celsius.addEventListener("click", showCelsius);
-
-/* when a user searches for a city (example: New York), 
-it should display the name of the city on the result page and 
-the current temperature of the city*/
-
 function showTemp(response) {
   console.log(response.data.main.temp);
-  document.querySelector(`#bigTemp`).innerHTML = Math.round(
-    response.data.main.temp
-  );
+  celsiusTempGlob = response.data.main.temp;
+
+  document.querySelector(`#bigTemp`).innerHTML = Math.round(celsiusTempGlob);
   document.querySelector(`#min`).innerHTML = Math.round(
     response.data.main.temp_min
   );
@@ -102,7 +57,59 @@ function showTemp(response) {
   document.querySelector(`.time`).innerHTML = formateDate(
     response.data.dt * 1000
   );
+  document
+    .querySelector(`#icon`)
+    .setAttribute(
+      `src`,
+      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    );
+  document
+    .querySelector(`#icon`)
+    .setAttribute(`alt`, response.data.weather[0].description);
 }
+
+function showFahrenheit(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector(".temp");
+  let fahrenheitTemperature = (celsiusTempGlob * 9) / 5 + 32;
+  temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
+
+  let conversationToF = document.querySelectorAll("#celsius-fahrenheit");
+  for (i = 0; i < conversationToF.length; i++) {
+    conversationToF[i].innerHTML = "°F";
+  }
+
+  let fahrenheitBold = document.querySelector("#fahrenheit");
+  fahrenheitBold.innerHTML = "<strong color='black'>°F</strong>";
+  let celsiusSmall = document.querySelector("#celsius");
+  celsiusSmall.innerHTML = "°C |";
+}
+
+let fahrenheit = document.querySelector("#fahrenheit");
+fahrenheit.addEventListener("click", showFahrenheit);
+
+function showCelsius(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector(".temp");
+  temperatureElement.innerHTML = Math.round(celsiusTempGlob);
+
+  let conversationToC = document.querySelectorAll("#celsius-fahrenheit");
+  for (i = 0; i < conversationToC.length; i++) {
+    conversationToC[i].innerHTML = "°C ";
+  }
+  let celsiusBold = document.querySelector("#celsius");
+  celsiusBold.innerHTML = "<strong color='black'>°C</strong>";
+  let fahrenheitSmall = document.querySelector("#fahrenheit");
+  fahrenheitSmall.innerHTML = "| °F";
+}
+let celsius = document.querySelector("#celsius");
+celsius.addEventListener("click", showCelsius);
+
+let celsiusTempGlob = null;
+
+/* when a user searches for a city (example: New York), 
+it should display the name of the city on the result page and 
+the current temperature of the city*/
 
 function search(city) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=be2b1d571d2242daa7cb5a3c859e71bb&units=metric`;
