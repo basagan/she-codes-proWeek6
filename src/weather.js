@@ -34,6 +34,26 @@ function formateDate(datestamp) {
   let numberDate = date.getDate();
   return `${dayWeek} ${hours}:${minutes}, ${month} ${numberDate}`;
 }
+function formateSunrise(sunriseStamp) {
+  let date = new Date(sunriseStamp);
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  return `${hours}:${minutes}`;
+}
+
+function formateSunset(sunsetStamp) {
+  let date = new Date(sunsetStamp);
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  return `${hours}:${minutes}`;
+}
+
 function formatDay(timestamp) {
   let date = new Date(timestamp * 1000);
   let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -112,14 +132,26 @@ function showTemp(response) {
     .setAttribute(`alt`, response.data.weather[0].description);
 
   getForecast(response.data.coord);
+  document.querySelector(`#sunrise`).innerHTML = formateSunrise(
+    response.data.sys.sunrise * 1000
+  );
+  document.querySelector(`#sunset`).innerHTML = formateSunset(
+    response.data.sys.sunset * 1000
+  );
+  let celsiusBold = document.querySelector("#celsius");
+  celsiusBold.innerHTML = "<strong color='black'>°C</strong>";
+  let fahrenheitSmall = document.querySelector("#fahrenheit");
+  fahrenheitSmall.innerHTML = "| °F";
 }
 
 function showFahrenheit(event) {
   event.preventDefault();
-  let temperatureElement = document.querySelector(".temp");
-  let fahrenheitTemperature = (celsiusTempGlob * 9) / 5 + 32;
-  temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
-
+  let temperatureElement = document.querySelectorAll(".temp");
+  for (i = 0; i < temperatureElement.length; i++) {
+    temperatureElement[i].innerHTML = Math.round(
+      (celsiusTempGlob * 9) / 5 + 32
+    );
+  }
   let conversationToF = document.querySelectorAll("#celsius-fahrenheit");
   for (i = 0; i < conversationToF.length; i++) {
     conversationToF[i].innerHTML = "°F";
@@ -136,9 +168,10 @@ fahrenheit.addEventListener("click", showFahrenheit);
 
 function showCelsius(event) {
   event.preventDefault();
-  let temperatureElement = document.querySelector(".temp");
-  temperatureElement.innerHTML = Math.round(celsiusTempGlob);
-
+  let temperatureElement = document.querySelectorAll(".temp");
+  for (i = 0; i < temperatureElement.length; i++) {
+    temperatureElement[i].innerHTML = Math.round(celsiusTempGlob);
+  }
   let conversationToC = document.querySelectorAll("#celsius-fahrenheit");
   for (i = 0; i < conversationToC.length; i++) {
     conversationToC[i].innerHTML = "°C ";
@@ -158,7 +191,8 @@ it should display the name of the city on the result page and
 the current temperature of the city*/
 
 function search(city) {
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=be2b1d571d2242daa7cb5a3c859e71bb&units=metric`;
+  let key = "be2b1d571d2242daa7cb5a3c859e71bb";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`;
   axios.get(apiUrl).then(showTemp);
 }
 
@@ -171,7 +205,7 @@ function showCityUrl(event) {
 let tempChange = document.querySelector(`#search-panel`);
 tempChange.addEventListener(`submit`, showCityUrl);
 
-// current location
+// change data for current location
 function searchMyLocation(position) {
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
